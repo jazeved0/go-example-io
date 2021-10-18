@@ -54,7 +54,9 @@ docker run \
 # This is updated every 0.1s, so it should be a close approximation of what rAdvisor does.
 # Note: this is using "cgroupfs" as the cgroup driver;
 # the path to the cgroup is different if using "systemd" as the cgroup driver.
-container_id=`docker ps -aqf "name=io-test-container" --no-trunc` && sudo watch -e -n 0.1 cat /sys/fs/cgroup/blkio/docker/$container_id/blkio.throttle.io_service_bytes_recursive
+container_id=`docker ps -aqf "name=io-test-container" --no-trunc` \
+    && sudo watch -e -n 0.1 \
+       cat /sys/fs/cgroup/blkio/docker/$container_id/blkio.throttle.io_service_bytes_recursive
 
 # In the container:
 # 1. Test block I/O write bytes: this should add about 67108864 bytes (64 MiB)
@@ -145,7 +147,9 @@ See https://rootlesscontaine.rs/getting-started/common/cgroup2/ to see if cgroup
 # In another terminal:
 # Run `watch ... cat` to show the contents of the `io.stat` file in the container's cgroup.
 # This is updated every 0.1s, so it should be a close approximation of what rAdvisor does.
-container_id=`docker ps -aqf "name=io-test-container" --no-trunc` && sudo watch -e -n 0.1 cat /sys/fs/cgroup/system.slice/docker-$container_id.scope/io.stat
+container_id=`docker ps -aqf "name=io-test-container" --no-trunc` \
+    && sudo watch -e -n 0.1 \
+       cat /sys/fs/cgroup/system.slice/docker-$container_id.scope/io.stat
 
 # In the container:
 # Test block I/O write bytes: this should add about 67108864 bytes (64 MiB)
