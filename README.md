@@ -50,7 +50,8 @@ docker run \
 
 ```sh
 # In another terminal:
-# Run `watch ... cat` to show the contents of the `blkio.throttle.io_service_bytes_recursive` file in the container's cgroup.
+# Run `watch ... cat` to show the contents of the
+# `blkio.throttle.io_service_bytes_recursive` file in the container's cgroup.
 # This is updated every 0.1s, so it should be a close approximation of what rAdvisor does.
 # Note: this is using "cgroupfs" as the cgroup driver;
 # the path to the cgroup is different if using "systemd" as the cgroup driver.
@@ -107,7 +108,8 @@ go-example-io --mode write --path /opt/mnt/file --block-size 1048576 --blocks 64
 #    and sync the file to disk at the end of the operation.
 go-example-io --mode write --path /opt/mnt/file2 --block-size 1048576 --blocks 64 --sync
 # 3. Run go-example-io to read the first test file and output its SHA-256 digest:
-#    (this probably won't output any statistics due to the page cache already containing this file)
+#    (this probably won't output any statistics
+#    due to the page cache already containing this file)
 go-example-io --mode read --path /opt/mnt/file --block-size 1048576
 
 # On the host machine:
