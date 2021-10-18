@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM golang:1.17-alpine
+FROM golang:1.17-alpine as builder
 WORKDIR /app
 
 # Download the modules
@@ -10,7 +10,9 @@ RUN go mod download
 
 # Build the program
 COPY cmd ./cmd
-RUN go build -o /usr/bin/go-example-io -- ./cmd/go-example-io
+RUN go build -o /opt/go-example-io -- ./cmd/go-example-io
 
 # Run the program
-CMD [ "/usr/bin/go-example-io", "--mode=combined", "--path=/tmp/go-example-io-file" ]
+FROM ubuntu:hirsute as runner
+COPY --from=builder /opt/go-example-io /usr/bin/go-example-io
+ENTRYPOINT [ "/usr/bin/go-example-io" ]
